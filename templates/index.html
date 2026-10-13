@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>SecureCheck | Password Strength Analyzer</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+<main class="shell">
+  <nav class="nav"><div class="logo">S<span>.</span></div><div class="brand"><b>SecureCheck</b><small>ALGORITHM ANALYSIS PROJECT</small></div><div class="local"><i></i> Local analysis</div></nav>
+  <header class="hero"><div class="eyebrow">PASSWORD HEALTH CHECK</div><h1>Stronger passwords.<br><em>Smarter habits.</em></h1><p>Analyze password characteristics, understand the result, and get useful suggestions. This demo processes input locally and does not save it.</p></header>
+  <section class="panel">
+    <div class="panel-head"><div><small class="step">01 / ANALYZE</small><h2>Check a sample password</h2></div><div class="shield">⌑</div></div>
+    <form method="post" autocomplete="off">
+      <label for="password">Sample password</label>
+      <div class="input-row"><input id="password" name="password" type="password" placeholder="Enter a sample password…" required autocomplete="new-password" spellcheck="false"><button type="button" id="toggle">SHOW</button></div>
+      <p class="hint">ⓘ Use a sample password for your class demo, never a real account password.</p>
+      <button class="submit" type="submit">Analyze password <span>↗</span></button>
+    </form>
+  </section>
+  {% if result %}
+  <section class="panel results" aria-live="polite">
+    <div class="panel-head"><div><small class="step">02 / RESULTS</small><h2>Your analysis</h2></div><span class="badge {{ result.rating|lower|replace(' ', '-') }}">{{ result.rating }}</span></div>
+    <div class="score-layout"><div class="ring" style="--score:{{ result.score }}%"><div class="ring-inner"><strong>{{ result.score }}</strong><small>OUT OF 100</small></div></div><div class="summary"><h3>{{ result.rating }} password</h3><p>Length <b>{{ result.length }} characters</b></p><p>Estimated character pool <b>{{ result.estimated_pool_size }}</b></p><p>Rough entropy estimate <b>{{ result.estimated_entropy_bits }} bits</b></p><small>Heuristic score only, not a security guarantee.</small></div></div>
+    <div class="subhead">CHECKLIST</div><div class="checks">{% for name, passed in result.checks.items() %}<div class="check"><span class="mark {{ 'ok' if passed else 'no' }}">{{ '✓' if passed else '×' }}</span><span class="check-name">{{ name.replace('_',' ')|capitalize }}</span><b class="{{ 'green' if passed else 'red' }}">{{ 'PASS' if passed else 'NEEDS WORK' }}</b></div>{% endfor %}</div>
+    <div class="subhead">SUGGESTIONS</div><ul class="suggestions">{% for item in result.feedback %}<li>{{ item }}</li>{% endfor %}</ul>
+    <div class="privacy">✓ &nbsp; This page does not store or transmit the submitted password. Use sample strings only.</div>
+  </section>
+  {% endif %}
+  <section class="steps"><article><small>01</small><h3>Inspect</h3><p>Check length, character classes, common passwords, and simple patterns.</p></article><article><small>02</small><h3>Score</h3><p>Apply transparent weighted rules and map the score to a rating.</p></article><article><small>03</small><h3>Improve</h3><p>Use unique, long passwords and store them in a password manager.</p></article></section>
+  <footer><b>SecureCheck</b><span>Introduction to Analysis of Algorithms · Python + Flask</span></footer>
+</main>
+<script>
+const input = document.getElementById('password');
+const toggle = document.getElementById('toggle');
+toggle.addEventListener('click', () => { const show = input.type === 'password'; input.type = show ? 'text' : 'password'; toggle.textContent = show ? 'HIDE' : 'SHOW'; });
+</script>
+</body></html>

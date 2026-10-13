@@ -1,0 +1,25 @@
+SAMPLE OUTPUTS (computed by the implementation)
+==============================================
+
+Input: password
+Score: 39/100
+Rating: Weak
+Length: 8
+Estimated entropy: 37.6 bits
+Feedback: Use at least 12 characters; a longer passphrase can be easier to remember. | Add uppercase letters. | Consider adding digits. | Consider adding symbols if the service permits them. | Avoid common or widely guessed passwords.
+
+Input: abc
+Score: 29/100
+Rating: Very Weak
+Length: 3
+Estimated entropy: 14.1 bits
+Feedback: Use at least 12 characters; a longer passphrase can be easier to remember. | Add uppercase letters. | Consider adding digits. | Consider adding symbols if the service permits them.
+
+Input: River!Quartz7Cobalt
+Score: 100/100
+Rating: Very Strong
+Length: 19
+Estimated entropy: 124.54 bits
+Feedback: Good result for this simple checker. Use a unique password and password manager.
+
+Use sample strings only. Never enter a real account password during a classroom demo.
